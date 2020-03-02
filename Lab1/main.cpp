@@ -31,11 +31,15 @@ int main()
     cin >> n;
     try
     {
-        n == 0 or n % 2 == 0 ? throw 1 : treagle(n);
+        if (n == 0 or n % 2 == 0) {
+            throw 1;
+        }
     }
     catch (int)
     {
         cout << "Число n должно быть нечетным и больше нуля." << "\n";
+        exit(1);
     }
+    treagle(n);
     return 0;
 }
