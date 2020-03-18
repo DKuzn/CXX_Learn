@@ -82,7 +82,7 @@ int main()
         return 1;
     }
     /*construct the matrix of vector type*/
-    std::vector<std::vector<int>> matrix(n, std::vector<int>(m));
+    std::vector<std::vector<int>> matrix(m, std::vector<int>(n));
     matrix = generate(n, m);
     output(matrix);
     sorting_element(matrix);
