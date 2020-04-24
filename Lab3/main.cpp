@@ -5,20 +5,12 @@
 #include <random>
 #include <vector>
 
-template<typename T>
-std::vector<T> slice(std::vector<T> &v, unsigned long m, unsigned long n)
-{
-    std::vector<T> vec;
-    std::copy(v.begin() + m, v.begin() + n, std::back_inserter(vec));
-    return vec;
-}
-
-std::vector<unsigned long> ArrayInit(int n)
+std::vector<unsigned long> ArrayInit(unsigned long n)
 {
     std::random_device rd;
     std::mt19937 mersenne(rd());
     std::vector<unsigned long> array = {};
-    for (int i = 0; i < n; i++) {
+    for (unsigned long i = 0; i < n; i++) {
         array.push_back(1 + mersenne() % 100);
     }
     return array;
@@ -33,46 +25,56 @@ void OutputArray(std::vector<unsigned long> array)
     std::cout << std::endl;
 }
 
-std::vector<unsigned long> Merge(std::vector<unsigned long> array)
-{
-    unsigned long n = array.size();
-    unsigned long m = n / 2;
-    std::vector<unsigned long> full = {};
-    std::vector<unsigned long> L = {};
-    std::vector<unsigned long> R = {};
-    for (unsigned long j = 0; j < n; j += 2){
-        L.push_back(array[j]);
-    }
-    for (unsigned long k = 1; k < n; k += 2){
-        R.push_back(array[k]);
-    }
-    unsigned long i = 0;
-    while (i < m){
-        if (L[i] < R[i]){
-            full.push_back(L[i]);
-            full.push_back(R[i]);
-        }
-        else if (L[i] >= R[i]){
-            full.push_back(R[i]);
-            full.push_back(L[i]);
-        }
-        i++;
-        }
-    if (L.size() < R.size()){
-        full.push_back(R[m]);
-    }
-    return full;
-}
-
 std::vector<unsigned long> MergeSort(std::vector<unsigned long> array)
 {
-    std::vector<unsigned long> sarr = Merge(array);
-    return sarr;
+    unsigned long n = array.size();
+    unsigned long step = 1;
+    std::vector<unsigned long> temp = {};
+    for (unsigned long i = 0; i < n; i++){
+        temp.push_back(0);
+    }
+    while (step < n){
+        unsigned long index = 0;
+        unsigned long l = 0;
+        unsigned long m = l + step;
+        unsigned long r = l + step * 2;
+        while (l < n){
+            if (m >= n){
+                m = n;
+            }
+            if (r >= n){
+                r = n;
+            }
+            unsigned long i1 = l, i2 = m;
+            while (i1 < m && i2 < r){
+                if (array[i1] < array[i2]){
+                    temp[index++] = array[i1++];
+                }
+                else {
+                temp[index++] = array[i2++];
+                }
+            }
+            while (i1 < m){
+                temp[index++] = array[i1++];
+                }
+            while (i2 < r){
+                temp[index++] = array[i2++];
+                }
+            l += step * 2;
+            m += step * 2;
+            r += step * 2;
+        }
+        for (unsigned long i = 0; i < n; i++){
+            array[i] = temp[i];
+        }
+        step *= 2;
+        }
+    return array;
 }
 
 int main()
 {
-    int n;
+    unsigned long n;
     std::cout << "Введите длину массива: " << "\n";
     std::cin >> n;
     std::vector<unsigned long> array = ArrayInit(n);
@@ -82,5 +84,4 @@ int main()
     std::cout << "Sorted array:" << "\n";
     OutputArray(sarray);
     return 0;
-
 }
