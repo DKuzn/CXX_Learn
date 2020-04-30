@@ -1,8 +1,7 @@
 #include <iostream>
 #include <iomanip>
-#include <string>
-#include <cstdlib>
 #include <random>
+#include <string>
 #include <vector>
 
 std::vector<unsigned long> ArrayInit(unsigned long n)
@@ -74,14 +73,23 @@ std::vector<unsigned long> MergeSort(std::vector<unsigned long> array)
 
 int main()
 {
-    unsigned long n;
-    std::cout << "Введите длину массива: " << "\n";
+    long n;
+    std::cout << "Введите длину массива: ";
     std::cin >> n;
+    try {
+        if (n <= 0) {
+            throw 1;
+        }
+    }
+    catch (int) {
+        std::cout << "Значение длины массива должно быть числом больше 0." << "\n";
+        exit(1);
+    }
     std::vector<unsigned long> array = ArrayInit(n);
-    std::cout << "Unsorted array:" << "\n";
+    std::cout << "Исходный массив:" << "\n";
     OutputArray(array);
     std::vector<unsigned long> sarray = MergeSort(array);
-    std::cout << "Sorted array:" << "\n";
+    std::cout << "Отсортированный массив:" << "\n";
     OutputArray(sarray);
     return 0;
 }
