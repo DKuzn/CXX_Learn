@@ -78,10 +78,10 @@ template <typename T>
 T prog(T n)
 {
     std::vector<T> array = ArrayInit(n);
-    std::cout << "Исходный массив:" << "\n";
+    std::cout << "Исходный массив:" << std::endl;
     OutputArray(array);
     std::vector<T> sarray = MergeSort(array);
-    std::cout << "Отсортированный массив:" << "\n";
+    std::cout << "Отсортированный массив:" << std::endl;
     OutputArray(sarray);
 }
 
