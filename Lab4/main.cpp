@@ -2,103 +2,123 @@
 #include <iomanip>
 #include <string>
 #include <random>
+#include <vector>
 
 using namespace std;
 
-void SortMatrix(int n, int m)
+vector<vector<int>> InitMatrix(int n, int m)
 {
     random_device rd;
     mt19937 mersenne(rd());
-    int ** matrix = new int * [n];
-    for (int i(0); i < n; i++) {
-        matrix[i] = new int[m];
-    }
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < m; j++) {
-            matrix[i][j] = 1 + mersenne() % 100;
+    vector <vector<int>> matrix(n, vector<int>(m));
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+        {
+            matrix[i][j] = 1 + mersenne()%100;
         }
-    }
-    cout << "Исходная матрица: " << endl;
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < m; j++) {
-            cout << setw(3) << matrix[i][j] << " ";
-        }
-        cout << endl;
-    }
-    for(int i = 0; i < n; i++) {
-        for (int k = 0; k < m; k++) {
-            for (int j = 0; j < m - k; j++) {
-                if (matrix[i][j] < matrix[i][j + 1]) {
-                    int buffer = matrix[i][j];
-                    matrix[i][j] = matrix[i][j + 1];
-                    matrix[i][j + 1] = buffer;
-                }
-            }
-        }
-    }
-    cout << "Сортированная матрица: " << endl;
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < m; j++) {
-            cout << setw(3) << matrix[i][j] << " ";
-        }
-        cout << endl;
-    }
-    for (int i(0); i < n; i++)
-        delete matrix[i];
-    delete[] matrix;
+    return matrix;
 }
 
-void SortMatrix(char n1, char m1)
+vector<vector<string>> InitMatrix(string n, string m)
 {
+    int p = stoi(n);
+    int q = stoi(m);
     random_device rd;
     mt19937 mersenne(rd());
-    int n = int(n1);
-    int m = int(m1);
-    char ** matrix = new char * [n];
-    for (int i(0); i < n; i++) {
-        matrix[i] = new char [m];
-    }
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < m; j++) {
-            matrix[i][j] = 1 + mersenne() % 100;
+    vector <vector<string>> matrix(p, vector<string>(q));
+    for (int i = 0; i < p; i++)
+        for (int j = 0; j < q; j++)
+        {
+            matrix[i][j] = 1 + mersenne()%100;
         }
+    return matrix;
+}
+
+void OutputMatrix(vector<vector<int>> matrix)
+{
+    unsigned long n = matrix.size();
+    unsigned long m = matrix[0].size();
+    for (unsigned long i = 0; i < n; i++) {
+        for (unsigned long j = 0; j < m; j++) {
+            cout << setw(3) << matrix[i][j] << " ";
+        }
+        cout << endl;
     }
-    cout << "Исходная матрица: " << endl;
+}
+
+void OutputMatrix(vector<vector<string>> matrix)
+{
+    unsigned long n = matrix.size();
+    unsigned long m = matrix[0].size();
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
             cout << setw(3) << matrix[i][j] << " ";
         }
         cout << endl;
     }
+}
+
+vector<vector<int>> SortMatrix(vector<vector<int>> matrix)
+{
+    unsigned long n = matrix.size();
+    unsigned long m = matrix[0].size() - 1;
     for(int i = 0; i < n; i++) {
         for (int k = 0; k < m; k++) {
             for (int j = 0; j < m - k; j++) {
                 if (matrix[i][j] < matrix[i][j + 1]) {
-                    char buffer = matrix[i][j];
-                    matrix[i][j] = matrix[i][j + 1];
-                    matrix[i][j + 1] = buffer;
+                    swap(matrix[i][j], matrix[i][j + 1]);
                 }
             }
         }
     }
-    cout << "Сортированная матрица: " << endl;
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < m; j++) {
-            cout << setw(3) << matrix[i][j] << " ";
+    return matrix;
+}
+
+vector<vector<string>> SortMatrix(vector<vector<string>> matrix)
+{
+    unsigned long n = matrix.size();
+    unsigned long m = matrix[0].size() - 1;
+    for(unsigned long i = 0; i < n; i++) {
+        for (unsigned long k = 0; k < m; k++) {
+            for (unsigned long j = 0; j < m - k; j++) {
+                if (matrix[i][j] < matrix[i][j + 1]) {
+                    swap(matrix[i][j], matrix[i][j + 1]);
+                }
+            }
         }
-        cout << endl;
     }
-    for (int i(0); i < n; i++)
-        delete matrix[i];
-    delete[] matrix;
+    return matrix;
+}
+
+void prog(int n, int m)
+{
+    vector <vector<int>> smat(n, vector<int>(m));
+    smat = InitMatrix(n, m);
+    cout << "Исходная целочисленная матрица: " << endl;
+    OutputMatrix(smat);
+    vector <vector<int>> ssmat(n, vector<int>(m));
+    ssmat = SortMatrix(smat);
+    cout << "Отсортированная целочисленная матрица: " << endl;
+    OutputMatrix(ssmat);
+}
+
+void prog(string n, string m)
+{
+    int p = stoi(n);
+    int q = stoi(m);
+    vector <vector<string>> smat(p, vector<string>(q));
+    smat = InitMatrix(n, m);
+    cout << "Исходная матрица строк: " << endl;
+    OutputMatrix(smat);
+    vector <vector<string>> ssmat(p, vector<string>(q));
+    ssmat = SortMatrix(smat);
+    cout << "Отсортированная матрица строк: " << endl;
+    OutputMatrix(ssmat);
 }
 
 int main()
 {
-    char n = 6;
-    char m = 7;
-    int j = 6;
-    int k = 7;
-    SortMatrix(n, m);
-    SortMatrix(j, k);
+    prog(6, 7);
+    prog("6", "7");
+    return 0;
 }
