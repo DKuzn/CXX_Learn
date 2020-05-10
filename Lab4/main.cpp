@@ -14,7 +14,7 @@ vector<vector<int>> InitMatrix(int n, int m)
     for (int i = 0; i < n; i++)
         for (int j = 0; j < m; j++)
         {
-            matrix[i][j] = 1 + mersenne()%100;
+            matrix[i][j] = 1 + mersenne() % 100;
         }
     return matrix;
 }
@@ -29,7 +29,7 @@ vector<vector<string>> InitMatrix(string n, string m)
     for (int i = 0; i < p; i++)
         for (int j = 0; j < q; j++)
         {
-            matrix[i][j] = 1 + mersenne()%100;
+            matrix[i][j] = 1 + mersenne() % 100;
         }
     return matrix;
 }
