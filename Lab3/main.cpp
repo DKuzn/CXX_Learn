@@ -86,10 +86,10 @@ int main()
         exit(1);
     }
     std::vector<unsigned long> array = ArrayInit(n);
-    std::cout << "Исходный массив:" << "\n";
+    std::cout << "Исходный массив:" << std::endl;
     OutputArray(array);
     std::vector<unsigned long> sarray = MergeSort(array);
-    std::cout << "Отсортированный массив:" << "\n";
+    std::cout << "Отсортированный массив:" << std::endl;
     OutputArray(sarray);
     return 0;
 }
