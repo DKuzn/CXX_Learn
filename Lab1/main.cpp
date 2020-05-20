@@ -27,7 +27,7 @@ int treagle(int n)
 int main()
 {
     int n;
-    cout << "Введите n: ";
+    cout << "Input n:";
     cin >> n;
     try
     {
@@ -37,7 +37,7 @@ int main()
     }
     catch (int)
     {
-        cout << "Число n должно быть нечетным и больше нуля." << "\n";
+        cout << "Number n must be uneven and above zero." << "\n";
         exit(1);
     }
     treagle(n);
