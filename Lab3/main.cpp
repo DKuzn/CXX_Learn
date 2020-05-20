@@ -82,7 +82,7 @@ int main()
         }
     }
     catch (int) {
-        std::cout << "Value array length must be a number greater than zero." << "\n";
+        std::cout << "Value array length must be a number greater than zero." << std::endl;
         exit(1);
     }
     std::vector<unsigned long> array = ArrayInit(n);
