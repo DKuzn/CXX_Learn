@@ -37,7 +37,7 @@ int main()
     }
     catch (int)
     {
-        cout << "Number n must be uneven and above zero." << "\n";
+        cout << "Number n must be uneven and greater then zero." << "\n";
         exit(1);
     }
     treagle(n);

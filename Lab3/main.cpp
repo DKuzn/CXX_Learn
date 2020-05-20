@@ -74,7 +74,7 @@ std::vector<unsigned long> MergeSort(std::vector<unsigned long> array)
 int main()
 {
     long n;
-    std::cout << "Введите длину массива: ";
+    std::cout << "Input array length:";
     std::cin >> n;
     try {
         if (n <= 0) {
@@ -82,14 +82,14 @@ int main()
         }
     }
     catch (int) {
-        std::cout << "Значение длины массива должно быть числом больше 0." << "\n";
+        std::cout << "Value array length must be a number greater than zero." << "\n";
         exit(1);
     }
     std::vector<unsigned long> array = ArrayInit(n);
-    std::cout << "Исходный массив:" << std::endl;
+    std::cout << "Unsorted array:" << std::endl;
     OutputArray(array);
     std::vector<unsigned long> sarray = MergeSort(array);
-    std::cout << "Отсортированный массив:" << std::endl;
+    std::cout << "Sorted array:" << std::endl;
     OutputArray(sarray);
     return 0;
 }

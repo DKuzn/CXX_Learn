@@ -19,7 +19,7 @@ void SortMatrix(int n, int m)
             matrix[i][j] = 1 + mersenne() % 100;
         }
     }
-    cout << "Исходная матрица: " << endl;
+    cout << "Unsorted matrix:" << endl;
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
             cout << setw(3) << matrix[i][j] << " ";
@@ -37,7 +37,7 @@ void SortMatrix(int n, int m)
             }
         }
     }
-    cout << "Сортированная матрица: " << endl;
+    cout << "Sorted matrix:" << endl;
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
             cout << setw(3) << matrix[i][j] << " ";
@@ -52,9 +52,9 @@ void SortMatrix(int n, int m)
 int main()
 {
     int n, m;
-    cout << "Введите n: ";
+    cout << "Input n:";
     cin >> n;
-    cout << "Введите m: ";
+    cout << "Input m:";
     cin >> m;
     try
     {
@@ -67,12 +67,12 @@ int main()
     }
     catch (int)
     {
-        cout << "Значение n должно лежать в пределах 1 < n <= 100" << "\n";
+        cout << "Value n must be within 1 < n <= 100." << "\n";
         exit(1);
     }
     catch (double)
     {
-        cout << "Значение m должно лежать в пределах 1 < m <= 50" << "\n";
+        cout << "Value m must be within 1 < m <= 50." << "\n";
         exit(1);
     }
 

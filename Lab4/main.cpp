@@ -94,11 +94,11 @@ void prog(int n, int m)
 {
     vector <vector<int>> smat(n, vector<int>(m));
     smat = InitMatrix(n, m);
-    cout << "Исходная целочисленная матрица: " << endl;
+    cout << "Unsorted integer matrix: " << endl;
     OutputMatrix(smat);
     vector <vector<int>> ssmat(n, vector<int>(m));
     ssmat = SortMatrix(smat);
-    cout << "Отсортированная целочисленная матрица: " << endl;
+    cout << "Sorted integer matrix: " << endl;
     OutputMatrix(ssmat);
 }
 
@@ -108,11 +108,11 @@ void prog(string n, string m)
     int q = stoi(m);
     vector <vector<string>> smat(p, vector<string>(q));
     smat = InitMatrix(n, m);
-    cout << "Исходная матрица строк: " << endl;
+    cout << "Unsorted string matrix: " << endl;
     OutputMatrix(smat);
     vector <vector<string>> ssmat(p, vector<string>(q));
     ssmat = SortMatrix(smat);
-    cout << "Отсортированная матрица строк: " << endl;
+    cout << "Sorted string matrix: " << endl;
     OutputMatrix(ssmat);
 }
 
