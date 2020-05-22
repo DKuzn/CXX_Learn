@@ -41,7 +41,7 @@ std::vector<unsigned long> MergeSort(std::vector<unsigned long> array)
             if (m >= n){
                 m = n;
             }
-            if (r >= n){
+            else if (r >= n){
                 r = n;
             }
             unsigned long i1 = l, i2 = m;
