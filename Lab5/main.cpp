@@ -11,7 +11,7 @@ std::vector<T> ArrayInit(T n)
     std::vector<T> array = {};
     array.reserve(n);
     for (int i = 0; i < n; i++) {
-        array.push_back(generator() % 100);
+        array.push_back(T(generator() % 100));
     }
     return array;
 }
@@ -79,10 +79,10 @@ template <typename T>
 void programme(T n)
 {
     std::vector<T> array = ArrayInit(n);
-    std::cout << "Unsorted array:" << std::endl;
+    std::cout << "Unsorted " << typeid(n).name() << " array:" << std::endl;
     OutputArray(array);
     std::vector<T> sort = MergeSort(array);
-    std::cout << "Sorted array:" << std::endl;
+    std::cout << "Sorted " << typeid(n).name() << " array:" << std::endl;
     OutputArray(sort);
 }
 
