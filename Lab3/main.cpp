@@ -7,10 +7,11 @@
 std::vector<unsigned long> ArrayInit(unsigned long n)
 {
     std::random_device rd;
-    std::mt19937 mersenne(rd());
+    std::mt19937 generator(rd());
     std::vector<unsigned long> array = {};
-    for (unsigned long i = 0; i < n; i++) {
-        array.push_back(1 + mersenne() % 100);
+    array.reserve(n);
+    for (int i = 0; i < n; i++) {
+        array.push_back(generator() % 100);
     }
     return array;
 }
@@ -18,7 +19,7 @@ std::vector<unsigned long> ArrayInit(unsigned long n)
 void OutputArray(std::vector<unsigned long> array)
 {
     unsigned long n = array.size();
-    for (unsigned long i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++) {
         std::cout << std::setw(3) << array[i] << " ";
     }
     std::cout << std::endl;
@@ -78,18 +79,18 @@ int main()
     std::cin >> n;
     try {
         if (n <= 0) {
-            throw 1;
+            throw std::exception();
         }
     }
-    catch (int) {
+    catch (std::exception& e) {
         std::cout << "Value array length must be a number greater than zero." << std::endl;
         exit(1);
     }
     std::vector<unsigned long> array = ArrayInit(n);
     std::cout << "Unsorted array:" << std::endl;
     OutputArray(array);
-    std::vector<unsigned long> sarray = MergeSort(array);
+    std::vector<unsigned long> sort = MergeSort(array);
     std::cout << "Sorted array:" << std::endl;
-    OutputArray(sarray);
+    OutputArray(sort);
     return 0;
 }
