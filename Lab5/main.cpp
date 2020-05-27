@@ -74,7 +74,7 @@ std::vector<T> MergeSort(std::vector<T> array)
 }
 
 template <typename T>
-T prog(T n)
+void prog(T n)
 {
     std::vector<T> array = ArrayInit(n);
     std::cout << "Unsorted array:" << std::endl;
