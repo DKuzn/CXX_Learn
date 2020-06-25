@@ -1,2 +1,2 @@
-# HMIaPpractice
-This repository keeps a practice works for the subject Highlevel methods of informatics and programming.
+# CXX_Learn
+This repository keeps a programs to learn C++.
