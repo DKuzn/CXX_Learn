@@ -30,6 +30,7 @@ std::vector<unsigned long> MergeSort(std::vector<unsigned long> array)
     unsigned long n = array.size();
     unsigned long step = 1;
     std::vector<unsigned long> temp = {};
+    temp.reserve(n);
     for (unsigned long i = 0; i < n; i++){
         temp.push_back(0);
     }
@@ -42,7 +43,7 @@ std::vector<unsigned long> MergeSort(std::vector<unsigned long> array)
             if (m >= n){
                 m = n;
             }
-            else if (r >= n){
+            if (r >= n){
                 r = n;
             }
             unsigned long i1 = l, i2 = m;
