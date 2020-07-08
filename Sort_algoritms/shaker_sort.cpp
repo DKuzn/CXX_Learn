@@ -43,6 +43,7 @@ std::vector<int> ShakerSort(std::vector<int> array)
         }
         left += 1;
     }
+    return array;
 }
 
 int main()
