@@ -16,7 +16,7 @@ std::vector<double> SolveEquation(double alpha)
 int main()
 {
     double alpha;
-    std::cout << "Введите альфа: ";
+    std::cout << "Input alpha: ";
     std::cin >> alpha;
     std::vector<double> answers = SolveEquation(alpha);
     double z1 = answers[0];
