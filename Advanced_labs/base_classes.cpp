@@ -109,12 +109,24 @@ int main()
     Polynomial addit = polynom1.addition(polynom2);
     Polynomial multi = polynom1.multiplication(polynom2);
     Polynomial subtr = polynom1.subtraction(polynom2);
+    std::cout << "First polynomial:" << std::endl;
     polynom1.output();
+    std::cout << "Second polynomial:" << std::endl;
     polynom2.output();
+    std::cout << "Addition first with second:" << std::endl;
     addit.output();
+    std::cout << "Multiplication first with second:" << std::endl;
     multi.output();
+    std::cout << "Subtraction second from first:" << std::endl;
     subtr.output();
+    std::cout << "Roots of first polynomial:" << std::endl;
+    polynom1.calculation();
+    std::cout << "Roots of second polynomial:" << std::endl;
     polynom2.calculation();
-    double value = polynom2.value(polynom2.get_roots()[1]);
-    std::cout << value << std::endl;
+    double value1 = polynom1.value(5);
+    double value2 = polynom2.value(5);
+    std::cout << "Value of first polynomial when x = 5:" << std::endl;
+    std::cout << value1 << std::endl;
+    std::cout << "Value of second polynomial when x = 5:" << std::endl;
+    std::cout << value2 << std::endl;
 }
