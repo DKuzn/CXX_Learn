@@ -59,9 +59,9 @@ public: Polynomial addition(Polynomial polynom){
 public: Polynomial subtraction(Polynomial polynom){
         // Subtraction operation for two Polynomial instance
         double * to_subtraction = polynom.get_args();
-        to_subtraction[0] += -args[0];
-        to_subtraction[1] += -args[1];
-        to_subtraction[2] += -args[2];
+        to_subtraction[0] = args[0] - to_subtraction[0];
+        to_subtraction[1] = args[1] - to_subtraction[1];
+        to_subtraction[2] = args[2] - to_subtraction[2];
         return {to_subtraction[0], to_subtraction[1], to_subtraction[2]};
     }
 
