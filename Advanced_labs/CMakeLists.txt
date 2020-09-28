@@ -5,3 +5,4 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_executable(solve_eq ./solve_eq.cpp)
 add_executable(base_classes ./base_classes.cpp)
+add_executable(d1_array ./d1_array.cpp)
