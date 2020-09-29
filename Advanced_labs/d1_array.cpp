@@ -4,12 +4,23 @@
 #include <random>
 
 
-class D1Array
+class Array1D
 {
-public:
+private:
     std::vector<int> array = {};
 
-public: explicit D1Array(int n){
+    int linearSearch() {
+        int key = 0;
+        for (int i = 0; i < array.size(); i++) {
+            if (array[i] == key) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+public:
+    explicit Array1D(int n) {
         std::random_device rd;
         std::mt19937 generator(rd());
         array.reserve(n);
@@ -18,18 +29,43 @@ public: explicit D1Array(int n){
         }
     }
 
-public: void output(){
-        for (int i : array) {
-            std::cout << std::setw(3) << i << " ";
+    friend std::ostream& operator<< (std::ostream &out, const Array1D &point) {
+        for (int i : point.array) {
+            out << std::setw(3) << i << " ";
         }
-        std::cout << std::endl;
+        return out;
     }
 
-    int findMinAbs(){
+    int sumAbsAfterZero() {
+        int zeroItem = linearSearch();
+        int sum = 0;
+        if (zeroItem == -1) {
+            return sum;
+        }
+        else {
+            for (int i = zeroItem; i < array.size(); i++) {
+                sum += abs(array[i]);
+            }
+        }
+        return sum;
+    }
+
+    void transform() {
+        std::vector<int> temp = {};
+        for (int i = 0; i < array.size(); i += 2) {
+            temp.push_back(array[i]);
+        }
+        for (int j = 1; j < array.size(); j += 2) {
+            temp.push_back(array[j]);
+        }
+        array = temp;
+    }
+
+    int findMinAbs() {
         int min = 1000;
-        for (int i : array){
-            if (abs(i) < min){
-                min = i;
+        for (int i : array) {
+            if (abs(i) < min) {
+                min = abs(i);
             }
         }
         return min;
@@ -38,9 +74,11 @@ public: void output(){
 
 int main()
 {
-    D1Array array = D1Array(10);
-    array.output();
-    auto min = array.findMinAbs();
-    std::cout << min << std::endl;
+    Array1D array = Array1D(15);
+    std::cout << "Source array:\n" << array << std::endl;
+    std::cout << "Minimal absolute value: " << array.findMinAbs() << std::endl;
+    std::cout << "Sum of absolute values after first zero element: " << array.sumAbsAfterZero() << std::endl;
+    array.transform();
+    std::cout << "Transformed array:\n" << array << std::endl;
     return 0;
 }
