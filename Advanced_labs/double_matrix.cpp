@@ -50,7 +50,7 @@ public:
     friend std::ostream &operator<<(std::ostream &out, const DoubleMatrix &dm) {
         for (const std::vector<double> &i : dm.doubleMatrix) {
             for (double j : i) {
-                out << std::setw(5) << j << " ";
+                out << std::setw(12) << j << " ";
             }
             out << std::endl;
         }
@@ -171,21 +171,30 @@ public:
         return matrix;
     }
 
-    template<typename T>
-    friend DoubleMatrix operator*(DoubleMatrix &dm, T value) {
-        for (int i = 0; i < dm.doubleMatrix.size(); i++) {
-            for (int j = 0; j < dm.doubleMatrix[0].size(); j++) {
-                dm.doubleMatrix[i][j] *= value;
-            }
+    DoubleMatrix exponentiation(int exp) {
+        auto tempMatrix = DoubleMatrix(doubleMatrix);
+        for (int i = 0; i < exp; i++) {
+            tempMatrix *= tempMatrix;
         }
-        return DoubleMatrix(dm.doubleMatrix);
+        return tempMatrix;
     }
 
     template<typename T>
-    friend void operator*=(DoubleMatrix &dm1, T value) {
-        for (int i = 0; i < dm1.doubleMatrix.size(); i++) {
-            for (int j = 0; j < dm1.doubleMatrix[0].size(); j++) {
-                dm1.doubleMatrix[i][j] *= value;
+    friend DoubleMatrix operator*(DoubleMatrix &dm, T value) {
+        auto temp = dm.doubleMatrix;
+        for (int i = 0; i < dm.rows; i++) {
+            for (int j = 0; j < dm.columns; j++) {
+                temp[i][j] *= value;
+            }
+        }
+        return DoubleMatrix(temp);
+    }
+
+    template<typename T>
+    friend void operator*=(DoubleMatrix &dm, T value) {
+        for (int i = 0; i < dm.doubleMatrix.size(); i++) {
+            for (int j = 0; j < dm.doubleMatrix[0].size(); j++) {
+                dm.doubleMatrix[i][j] *= value;
             }
         }
     }
@@ -232,6 +241,26 @@ public:
         dm1.doubleMatrix = result;
     }
 
+    template<typename T>
+    friend DoubleMatrix operator/(DoubleMatrix &dm, T value) {
+        return dm * (1.0 / value);
+    }
+
+    template<typename T>
+    friend void operator/=(DoubleMatrix &dm, T value) {
+        dm *= (1.0 / value);
+    }
+
+    friend DoubleMatrix operator/(DoubleMatrix &dm1, DoubleMatrix &dm2) {
+        auto dm2inverse = dm2.inverseMatrix();
+        return dm1 * dm2inverse;
+    }
+
+    friend void operator/=(DoubleMatrix &dm1, DoubleMatrix &dm2) {
+        auto dm2inverse = dm2.inverseMatrix();
+        dm1 *= dm2inverse;
+    }
+
     std::vector<double> operator[](int index) {
         return doubleMatrix[index];
     }
@@ -262,6 +291,11 @@ int main() {
         std::cout << matrix3 << std::endl;
         auto inv3 = matrix3.inverseMatrix();
         std::cout << matrix3 * inv3 << std::endl;
+        std::cout << matrix3 / 2 << std::endl;
+        DoubleMatrix matrix4 = DoubleMatrix(5, 5);
+        matrix3 /= matrix4;
+        std::cout << matrix3 << std::endl;
+        std::cout << matrix3.exponentiation(5) << std::endl;
     }
     catch (MatrixException &exception) {
         std::cout << exception.what() << std::endl;
