@@ -60,31 +60,32 @@ public:
     double determinant() {
         const double EPS = 1E-9;
         double det = 1;
+        auto tempMatrix = doubleMatrix;
         if (rows != columns) {
             throw MatrixException("The determinant cannot be calculated. Rows and columns of th matrix are not equal.");
         }
         for (int i = 0; i < rows; i++) {
             int index = i;
             for (int j = i + 1; j < rows; j++) {
-                if (std::abs(doubleMatrix[j][i]) > std::abs(doubleMatrix[index][i]))
+                if (std::abs(tempMatrix[j][i]) > std::abs(tempMatrix[index][i]))
                     index = j;
             }
-            if (std::abs(doubleMatrix[index][i]) < EPS) {
+            if (std::abs(tempMatrix[index][i]) < EPS) {
                 det = 0;
                 break;
             }
-            swap(doubleMatrix[i], doubleMatrix[index]);
+            swap(tempMatrix[i], tempMatrix[index]);
             if (i != index) {
                 det = -det;
             }
-            det *= doubleMatrix[i][i];
+            det *= tempMatrix[i][i];
             for (int j = i + 1; j < rows; j++) {
-                doubleMatrix[i][j] /= doubleMatrix[i][i];
+                tempMatrix[i][j] /= tempMatrix[i][i];
             }
             for (int j = 0; j < rows; j++) {
-                if (j != i && std::abs(doubleMatrix[j][i]) > EPS) {
+                if (j != i && std::abs(tempMatrix[j][i]) > EPS) {
                     for (int k = i + 1; k < rows; k++) {
-                        doubleMatrix[j][k] -= doubleMatrix[i][k] * doubleMatrix[j][i];
+                        tempMatrix[j][k] -= tempMatrix[i][k] * tempMatrix[j][i];
                     }
                 }
             }
@@ -120,6 +121,54 @@ public:
             temp = 0;
         }
         return norm;
+    }
+
+    double algebraicComplement(int i, int j) {
+        DoubleMatrix minor = this->minor(i, j);
+        double alComp = pow(-1, i + j) * minor.determinant();
+        return alComp;
+    }
+
+    DoubleMatrix algebraicComplementsMatrix() {
+        auto tempMatrix = doubleMatrix;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                tempMatrix[i][j] = this->algebraicComplement(i, j);
+            }
+        }
+        return DoubleMatrix(tempMatrix);
+    }
+
+    DoubleMatrix transpose() {
+        std::vector<std::vector<double>> matrix(columns, std::vector<double>(rows));
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                matrix[j][i] = doubleMatrix[i][j];
+            }
+        }
+        return DoubleMatrix(matrix);
+    }
+
+    DoubleMatrix minor(int i, int j) {
+        if (i > rows || j > columns) {
+            throw MatrixException("One or two indexes is out of matrix boundaries.");
+        }
+        auto temp = doubleMatrix;
+        temp.erase(temp.begin() + i);
+        for (std::vector<double> &k : temp) {
+            k.erase(k.begin() + j);
+        }
+        return DoubleMatrix(temp);
+    }
+
+    DoubleMatrix inverseMatrix() {
+        double det = this->determinant();
+        if (det == 0) {
+            throw MatrixException("Inverse matrix cannot be calculated. Determinant = 0.");
+        }
+        DoubleMatrix alMatrix = this->algebraicComplementsMatrix().transpose();
+        DoubleMatrix matrix = alMatrix * (1 / det);
+        return matrix;
     }
 
     template<typename T>
@@ -205,7 +254,14 @@ int main() {
         std::cout << matrix2.normM() << std::endl;
         std::cout << matrix2.normL() << std::endl;
         std::cout << matrix3 << std::endl;
-        std::cout << matrix3.determinant() << std::endl;
+        std::cout << matrix3.transpose() << std::endl;
+        std::cout << matrix3.minor(0, 1) << std::endl;
+        std::cout << matrix3.minor(0, 1).determinant() << std::endl;
+        std::cout << matrix3.algebraicComplement(0, 1) << std::endl;
+        std::cout << matrix3.inverseMatrix() << std::endl;
+        std::cout << matrix3 << std::endl;
+        auto inv3 = matrix3.inverseMatrix();
+        std::cout << matrix3 * inv3 << std::endl;
     }
     catch (MatrixException &exception) {
         std::cout << exception.what() << std::endl;
