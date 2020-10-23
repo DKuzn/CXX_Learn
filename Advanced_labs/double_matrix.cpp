@@ -32,10 +32,11 @@ public:
         columns = columns_i;
         std::random_device rd;
         std::mt19937 generator(rd());
+        std::uniform_real_distribution<> dist(-10.0, 10.0);
         std::vector<std::vector<double>> matrix(rows_i, std::vector<double>(columns_i));
         for (int i = 0; i < rows_i; i++) {
             for (int j = 0; j < columns_i; j++) {
-                matrix[i][j] = generator() % 10;
+                matrix[i][j] = dist(generator);
             }
         }
         doubleMatrix = matrix;
@@ -62,7 +63,7 @@ public:
         double det = 1;
         auto tempMatrix = doubleMatrix;
         if (rows != columns) {
-            throw MatrixException("The determinant cannot be calculated. Rows and columns of th matrix are not equal.");
+            throw MatrixException("Determinant cannot be calculated. Rows and columns of the matrix are not equal.");
         }
         for (int i = 0; i < rows; i++) {
             int index = i;
@@ -266,39 +267,26 @@ public:
     }
 };
 
-
 int main() {
-    try {
-        DoubleMatrix matrix1 = DoubleMatrix(6, 5);
-        DoubleMatrix matrix2 = DoubleMatrix(5, 4);
-        DoubleMatrix matrix3 = DoubleMatrix(5, 5);
-        std::cout << "Matrix1\n" << matrix1;
-        std::cout << "Matrix2\n" << matrix2;
-        std::cout << "Matrix1 * Matrix2\n" << matrix1 * matrix2;
-        matrix1 *= matrix2;
-        std::cout << "Matrix1\n" << matrix1;
-        matrix2 *= 2;
-        std::cout << "Matrix2\n" << matrix2;
-        std::cout << matrix1[1][1] << std::endl;
-        std::cout << matrix2.normM() << std::endl;
-        std::cout << matrix2.normL() << std::endl;
-        std::cout << matrix3 << std::endl;
-        std::cout << matrix3.transpose() << std::endl;
-        std::cout << matrix3.minor(0, 1) << std::endl;
-        std::cout << matrix3.minor(0, 1).determinant() << std::endl;
-        std::cout << matrix3.algebraicComplement(0, 1) << std::endl;
-        std::cout << matrix3.inverseMatrix() << std::endl;
-        std::cout << matrix3 << std::endl;
-        auto inv3 = matrix3.inverseMatrix();
-        std::cout << matrix3 * inv3 << std::endl;
-        std::cout << matrix3 / 2 << std::endl;
-        DoubleMatrix matrix4 = DoubleMatrix(5, 5);
-        matrix3 /= matrix4;
-        std::cout << matrix3 << std::endl;
-        std::cout << matrix3.exponentiation(5) << std::endl;
-    }
-    catch (MatrixException &exception) {
-        std::cout << exception.what() << std::endl;
-    }
-
+    DoubleMatrix matrix1 = DoubleMatrix(6, 5);
+    DoubleMatrix matrix2 = DoubleMatrix(5, 4);
+    std::cout << "Matrix1:\n" << matrix1 << std::endl;
+    std::cout << "Matrix2:\n" << matrix2 << std::endl;
+    std::cout << "Matrix1 * Matrix2:\n" << matrix1 * matrix2 << std::endl;
+    matrix1 *= matrix2;
+    std::cout << "Matrix1 *= Matrix2:\n" << matrix1 << std::endl;
+    matrix2 *= 2;
+    std::cout << "Matrix2 *= 2:\n" << matrix2 << std::endl;
+    std::cout << "Matrix1[1][1]:\n" << matrix1[1][1] << std::endl;
+    std::cout << "M-norm of Matrix2:\n" << matrix2.normM() << std::endl;
+    std::cout << "L-norm of Matrix2:\n" << matrix2.normL() << std::endl;
+    DoubleMatrix matrix3 = DoubleMatrix(5, 5);
+    std::cout << "Matrix3:\n" << matrix3 << std::endl;
+    std::cout << "Matrix3 / 2:\n" << matrix3 / 2 << std::endl;
+    DoubleMatrix matrix4 = DoubleMatrix(5, 5);
+    std::cout << "Matrix4:\n" << matrix4 << std::endl;
+    matrix3 /= matrix4;
+    std::cout << "Matrix3 /= Matrix4:\n" << matrix3 << std::endl;
+    std::cout << "Matrix3 ^ 5:\n" << matrix3.exponentiation(5) << std::endl;
+    std::cout << "Determinant of Matrix4:\n" << matrix4.determinant() << std::endl;
 }
