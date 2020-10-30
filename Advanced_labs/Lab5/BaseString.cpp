@@ -25,3 +25,8 @@ void BaseString::clear() {
     value = "";
     byteLength = value.length();
 }
+
+std::ostream &operator<<(std::ostream &out, const BaseString &bs) {
+    out << bs.value;
+    return out;
+}

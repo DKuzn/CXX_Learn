@@ -11,8 +11,9 @@ public:
     explicit BaseString(char value_i);
     ushort getByteLength() const;
     void clear();
+    friend std::ostream &operator<<(std::ostream &out, const BaseString &bs);
 
-private:
+protected:
     ushort byteLength;
 };
 
